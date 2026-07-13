@@ -6,10 +6,9 @@ let app = express();
 console.log("Hello World");
 
 // 7. Root-Level Request Logger Middleware
-// This must be placed ABOVE all your route definitions
 app.use(function(req, res, next) {
   console.log(req.method + " " + req.path + " - " + req.ip);
-  next(); // Call next() so Express moves to the next handler!
+  next();
 });
 
 // 4. Serve Static Assets
@@ -27,6 +26,14 @@ app.get("/json", function(req, res) {
     message = message.toUpperCase();
   }
   res.json({ "message": message });
+});
+
+// 8. Chain Middleware to Create a Time Server
+app.get("/now", function(req, res, next) {
+  req.time = new Date().toString();
+  next(); // Passes the request along to the next function in the chain
+}, function(req, res) {
+  res.json({ "time": req.time });
 });
 
 
