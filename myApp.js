@@ -31,9 +31,14 @@ app.get("/json", function(req, res) {
 // 8. Chain Middleware to Create a Time Server
 app.get("/now", function(req, res, next) {
   req.time = new Date().toString();
-  next(); // Passes the request along to the next function in the chain
+  next();
 }, function(req, res) {
   res.json({ "time": req.time });
+});
+
+// 9. Get Route Parameter Input from the Client
+app.get("/:word/echo", function(req, res) {
+  res.json({ "echo": req.params.word });
 });
 
 
