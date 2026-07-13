@@ -6,7 +6,8 @@ console.log("Hello World");
 
 // 2. Start a Working Express Server
 app.get("/", function(req, res) {
-  res.send("Hello Express");
+  const absolutePath = __dirname + "/views/index.html";
+  res.sendFile(absolutePath);
 });
 
 
