@@ -13,9 +13,13 @@ app.get("/", function(req, res) {
   res.sendFile(path.join(__dirname, "views", "index.html"));
 });
 
-// 5. Serve JSON on a Specific Route (Clean and direct for Step 5)
+// 6. Use the .env File
 app.get("/json", function(req, res) {
-  res.json({ "message": "Hello json" });
+  let message = "Hello json";
+  if (process.env.MESSAGE_STYLE === "uppercase") {
+    message = message.toUpperCase();
+  }
+  res.json({ "message": message });
 });
 
 
