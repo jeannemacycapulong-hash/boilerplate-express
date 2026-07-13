@@ -1,5 +1,6 @@
 let express = require('express');
 let path = require('path');
+let bodyParser = require('body-parser'); // Import body-parser
 let app = express();
 
 // 1. Meet the Node console
@@ -10,6 +11,10 @@ app.use(function(req, res, next) {
   console.log(req.method + " " + req.path + " - " + req.ip);
   next();
 });
+
+// 11. Use body-parser to Parse POST Requests
+// This handles URL-encoded data and must be placed before your routes
+app.use(bodyParser.urlencoded({ extended: false }));
 
 // 4. Serve Static Assets
 app.use("/public", express.static(__dirname + "/public"));
@@ -40,7 +45,6 @@ app.get("/:word/echo", function(req, res) {
   res.json({ "echo": req.params.word });
 });
 
-// 10. Get Query Parameter Input from the Client
 app.get("/name", function(req, res) {
   res.json({ "name": req.query.first + " " + req.query.last });
 });
